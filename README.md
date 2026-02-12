@@ -12,17 +12,6 @@ Master the art of software architecture with this Java-based guide to Low-Level 
 How to apply LLD principles to web services:
 - **Layered Architecture:** Controller → Service → Repository.
 - **Data Transfer Objects (DTOs):** Decoupling internal entities from public API responses.
-- **Exception Handling:** Centralized `@ControllerAdvice` for consistent error responses.
-- **Request Validation:** Using JSR-380 (Bean Validation) to ensure data integrity.
-- **Pagination & Sorting:** Efficiently handling large datasets via Spring Data JPA.
-
-### 🧱 SOLID Design Principles
-Clear Java examples for writing extensible code:
-- **S**ingle Responsibility: One class, one job.
-- **O**pen/Closed: Extend functionality without modifying existing code.
-- **L**iskov Substitution: Child classes must be replaceable with parent classes.
-- **I**nterface Segregation: No "fat" interfaces; keep them specific.
-- **D**ependency Inversion: Depend on abstractions, not concretions.
 
 ### 🎨 Design Patterns
 Practical implementations of GOF patterns:
