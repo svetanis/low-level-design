@@ -5,14 +5,14 @@ public final class Ticket {
 	private final long entryTime;
 	private final String id;
 	private final String spotId;
-	private final VehicleType vehicleType;
+	private final Vehicle vehicle;
 
-	public Ticket(long entryTime, String id, String spotId, VehicleType vehicleType) {
+	public Ticket(long entryTime, String id, String spotId, Vehicle vehicle) {
 		super();
 		this.entryTime = entryTime;
 		this.id = id;
 		this.spotId = spotId;
-		this.vehicleType = vehicleType;
+		this.vehicle = vehicle;
 	}
 
 	public long getEntryTime() {
@@ -27,8 +27,7 @@ public final class Ticket {
 		return spotId;
 	}
 
-	public VehicleType getVehicleType() {
-		return vehicleType;
+	public Vehicle getVehicle() {
+		return vehicle;
 	}
-
 }

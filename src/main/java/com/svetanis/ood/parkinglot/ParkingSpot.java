@@ -3,9 +3,9 @@ package com.svetanis.ood.parkinglot;
 public final class ParkingSpot {
 
 	private final String id;
-	private final VehicleType type;
+	private final SpotSize type;
 
-	public ParkingSpot(String id, VehicleType type) {
+	public ParkingSpot(String id, SpotSize type) {
 		this.id = id;
 		this.type = type;
 	}
@@ -14,7 +14,7 @@ public final class ParkingSpot {
 		return id;
 	}
 
-	public VehicleType getType() {
+	public SpotSize getType() {
 		return type;
 	}
 

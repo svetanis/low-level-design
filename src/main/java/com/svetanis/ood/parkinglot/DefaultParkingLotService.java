@@ -4,7 +4,6 @@ import static com.google.common.base.Predicates.and;
 import static com.google.common.base.Predicates.not;
 import static com.svetanis.java.base.collect.Iterables.firstMatch;
 import static com.svetanis.java.base.collect.Maps.getIfPresent;
-import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import java.util.HashMap;
@@ -30,24 +29,24 @@ public final class DefaultParkingLotService implements ParkingLotService {
 	}
 
 	@Override
-	public Ticket enter(VehicleType vehicleType) {
-		Optional<ParkingSpot> optional = availableSpot(vehicleType);
+	public Ticket enter(Vehicle vehicle) {
+		Optional<ParkingSpot> optional = availableSpot(vehicle);
 		if (!optional.isPresent()) {
-			String msg = format("No available spots for vehicle type %s", vehicleType);
-			throw new RuntimeException(msg);
+			String msg = "No available spots for vehicle type %s";
+			throw new RuntimeException(String.format(msg, vehicle));
 		}
 		ParkingSpot spot = optional.get();
 		occupiedSpotIds.add(spot.getId());
 		String tid = UUID.randomUUID().toString();
 		long entryTime = System.currentTimeMillis();
-		Ticket ticket = new Ticket(entryTime, tid, spot.getId(), vehicleType);
+		Ticket ticket = new Ticket(entryTime, tid, spot.getId(), vehicle);
 		activeTickets.put(tid, ticket);
 		return ticket;
 	}
 
-	private Optional<ParkingSpot> availableSpot(VehicleType vehicleType) {
+	private Optional<ParkingSpot> availableSpot(Vehicle vehicle) {
 		List<ParkingSpot> spots = parkingLot.getSpots();
-		Predicate<ParkingSpot> stp = s -> s.getType() == vehicleType;
+		Predicate<ParkingSpot> stp = s -> s.getType() == vehicle.requiredSpotSize();
 		Predicate<ParkingSpot> idp = s -> occupiedSpotIds.contains(s.getId());
 		Predicate<ParkingSpot> psp = and(stp, not(idp));
 		return firstMatch(spots, psp);

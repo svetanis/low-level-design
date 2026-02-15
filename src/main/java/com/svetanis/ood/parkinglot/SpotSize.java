@@ -1,9 +1,9 @@
 package com.svetanis.ood.parkinglot;
 
-public enum VehicleType {
+public enum SpotSize {
 
 	MOTORCYCLE, //
-	CAR, //
+	REGULAR, //
 	LARGE; //
 
 }
