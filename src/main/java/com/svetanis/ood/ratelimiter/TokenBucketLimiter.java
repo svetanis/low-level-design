@@ -1,8 +1,5 @@
 package com.svetanis.ood.ratelimiter;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.of;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,11 +29,11 @@ public final class TokenBucketLimiter implements Limiter {
 		if (bucket.tokens >= 1) {
 			bucket.tokens -= 1;
 			int remaining = (int) Math.floor(bucket.tokens);
-			return new RateLimitResult(true, remaining, absent());
+			return new RateLimitResult(true, remaining);
 		}
 		double tokensNeeded = 1 - bucket.tokens;
 		long retryAfter = (long) Math.ceil((tokensNeeded * MAX) / rate);
-		return new RateLimitResult(false, 0, of(retryAfter));
+		return new RateLimitResult(false, 0, retryAfter);
 	}
 
 	public static final class TokenBucket {

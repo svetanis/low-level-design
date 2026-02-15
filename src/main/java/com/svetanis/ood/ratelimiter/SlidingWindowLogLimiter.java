@@ -1,8 +1,5 @@
 package com.svetanis.ood.ratelimiter;
 
-import static com.google.common.base.Optional.absent;
-import static com.google.common.base.Optional.of;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -31,10 +28,10 @@ public final class SlidingWindowLogLimiter implements Limiter {
 		if (log.size() < maxRequests) {
 			log.addLast(now);
 			int remaining = maxRequests - log.size();
-			return new RateLimitResult(true, remaining, absent());
+			return new RateLimitResult(true, remaining);
 		}
 		long timestamp = log.peekFirst();
 		long retryAfter = (timestamp + window) - now;
-		return new RateLimitResult(false, 0, of(retryAfter));
+		return new RateLimitResult(false, 0, retryAfter);
 	}
 }
