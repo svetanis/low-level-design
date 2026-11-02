@@ -2,13 +2,15 @@ package com.svetanis.ood.parkinglot;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+
 public final class ParkingLot {
 
 	private final long hourlyRateCents;
-	private final List<ParkingSpot> spots;
+	private final ImmutableList<ParkingSpot> spots;
 
 	public ParkingLot(long hourlyRateCents, List<ParkingSpot> spots) {
-		this.spots = spots;
+		this.spots = ImmutableList.copyOf(spots); // COPY: a caller's later change cannot reach the lot
 		this.hourlyRateCents = hourlyRateCents;
 	}
 
@@ -16,7 +18,7 @@ public final class ParkingLot {
 		return hourlyRateCents;
 	}
 
-	public List<ParkingSpot> getSpots() {
+	public ImmutableList<ParkingSpot> getSpots() {
 		return spots;
 	}
 

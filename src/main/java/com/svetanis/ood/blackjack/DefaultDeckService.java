@@ -31,13 +31,10 @@ public final class DefaultDeckService<T extends PlayingCard> implements DeckServ
 	@Override
 	public Optional<T> dealCard() {
 		if (remainingCards(deck) == 0) {
-			return absent();
+			return absent(); // EMPTY: every card has been dealt
 		}
-		T card = deck.getCards().get(deck.getDeal());
-		int deal = deck.getDeal() + 1;
-		List<T> cards = newArrayList(deck.getCards());
-		cards.remove(card);
-		deck = Deck.build(deal, cards);
+		T card = deck.getCards().get(deck.getDeal() - 1); // TAKE: deal is the 1-based position of the next card
+		deck = Deck.build(deck.getDeal() + 1, deck.getCards()); // ADVANCE: the cards stay, only the position moves
 		return of(card);
 	}
 
@@ -59,7 +56,7 @@ public final class DefaultDeckService<T extends PlayingCard> implements DeckServ
 	}
 
 	private int remainingCards(Deck<T> deck) {
-		return deck.getCards().size() - deck.getDeal();
+		return deck.getCards().size() - (deck.getDeal() - 1); // LEFT: positions deal .. size are still in the deck
 	}
 
 }

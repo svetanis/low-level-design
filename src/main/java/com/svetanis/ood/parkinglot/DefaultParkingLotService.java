@@ -73,8 +73,8 @@ public final class DefaultParkingLotService implements ParkingLotService {
 		long millis = 1000 * 60 * 60;
 		long duration = exitTime - entryTime;
 		long hours = duration / millis;
-		if (duration % millis > 0) {
-			hours += 1;
+		if (duration % millis > 0 || hours == 0) {
+			hours += 1; // ROUND UP: a started hour is a paid hour, and every stay starts one
 		}
 		return hours * parkingLot.getHourlyRateCents();
 	}

@@ -76,9 +76,10 @@ public final class DefaultBlackJackGame implements BlackJackGameService {
 	@Override
 	public ImmutableList<Hand<BlackJackCard>> playAllHands(List<Hand<BlackJackCard>> hands) {
 		List<Hand<BlackJackCard>> list = newArrayList();
-		for (Hand<BlackJackCard> hand : hands) {
-			if (playHand(hand).isPresent()) {
-				list.add(hand);
+		for (Hand<BlackJackCard> dealt : hands) {
+			Optional<Hand<BlackJackCard>> played = playHand(dealt);
+			if (played.isPresent()) {
+				list.add(played.get()); // KEEP the hand as played, with the cards it drew
 			}
 		}
 		return newList(list);
