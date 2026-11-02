@@ -33,12 +33,12 @@ public final class HeapSort implements Sorting {
 		int right = right(i);
 
 		// if left child is greater than root
-		if (left < n && list.get(left).compareTo(list.get(root)) == 1) {
+		if (left < n && list.get(left).compareTo(list.get(root)) > 0) { // LARGER: any positive, not just 1
 			root = left;
 		}
 
 		// if right child is greater than root
-		if (right < n && list.get(right).compareTo(list.get(root)) == 1) {
+		if (right < n && list.get(right).compareTo(list.get(root)) > 0) {
 			root = right;
 		}
 

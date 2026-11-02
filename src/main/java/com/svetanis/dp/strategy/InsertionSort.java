@@ -11,7 +11,7 @@ public final class InsertionSort implements Sorting {
 		for (int i = 0; i < list.size(); i++) {
 			C temp = list.get(i);
 			int j = i;
-			while (j > 0 && list.get(j - 1).compareTo(temp) == 1) {
+			while (j > 0 && list.get(j - 1).compareTo(temp) > 0) { // LARGER: compareTo promises a sign, not 1
 				list.set(j, list.get(j - 1));
 				j--;
 			}
