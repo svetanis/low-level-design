@@ -51,7 +51,7 @@ public final class CardsProvider implements Provider<ImmutableList<SimpleCard>> 
 
 	private SimpleCard build(ScoreCard sc) {
 		double pct = parseDouble(sc.getPct_hospitals_mu().get());
-		int percent = Double.valueOf(pct * 100).intValue();
+		int percent = (int) Math.round(pct * 100); // ROUND: 0.29 * 100 is 28.999..., which truncates to 28
 		SimpleCard.Builder builder = new Builder();
 		builder.withYear(parseInt(sc.getPeriod().get()));
 		builder.withCode(sc.getRegion_code().get());
