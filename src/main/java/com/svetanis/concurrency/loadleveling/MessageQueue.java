@@ -1,29 +1,30 @@
 package com.svetanis.concurrency.loadleveling;
 
-import static com.google.common.base.Optional.absent;
-import static com.svetanis.java.base.Optionals.present;
-
-import java.util.LinkedList;
-import java.util.Queue;
-
-import com.google.common.base.Optional;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public final class MessageQueue {
 
+	// bounded on purpose: this is the load-levelling buffer, so a producer that outruns the
+	// consumer is meant to wait rather than let the backlog grow without limit. the sibling
+	// in producerconsumer/ uses the same size for the same reason.
+	private static final int CAPACITY = 5;
+
 	public MessageQueue() {
-		this.queue = new LinkedList<>();
+		this.queue = new LinkedBlockingQueue<>(CAPACITY);
 	}
 
-	private final Queue<Message> queue;
+	private final BlockingQueue<Message> queue;
 
-	public void put(Message message) {
-		queue.add(message);
+	public void put(Message message) throws InterruptedException {
+		queue.put(message);
 	}
 
-	public Optional<Message> get() {
-		if (queue.isEmpty()) {
-			return absent();
-		}
-		return present(queue.poll());
+	// blocks until a message is available, so there is nothing to report as absent and no
+	// reason for a caller to poll. a plain LinkedList here was not thread-safe: racing adds
+	// left the size counter above the real element count, so isEmpty() said false while the
+	// chain was exhausted and the Optional built from a null poll() threw instead.
+	public Message get() throws InterruptedException {
+		return queue.take();
 	}
 }

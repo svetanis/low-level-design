@@ -14,6 +14,13 @@ import java.util.List;
 // chopstick at the same time. using threads and locks,
 // implement a simulation of the dining philosophers
 // problem that prevents deadlocks.
+//
+// THIS package is the version that CAN deadlock, on purpose. Every philosopher takes the left
+// chopstick, then the right. If all of them hold their left at the same moment, each waits forever
+// for a right chopstick its neighbour holds: a cycle of waits. A run can finish many times before
+// the timing lines up, which is what makes the bug easy to miss. deadlockfree takes the
+// lower-numbered chopstick first, so no cycle can form; allornothing uses tryLock and puts the
+// left one back when the right one is busy.
 
 public final class DiningPhilosophers {
 
