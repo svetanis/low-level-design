@@ -65,7 +65,7 @@ public class BlackJackGameServiceTest {
 
 	private ImmutableList<Card> generateCards() {
 		List<Card> cards = newArrayList();
-		for (int i = 1; i < 13; ++i) {
+		for (int i = 1; i <= 13; ++i) { // ranks 1 (ace) to 13 (king)
 			for (Suit suit : Suit.values()) {
 				cards.add(Card.build(i, suit));
 			}
